@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.persistence.*;
 
+// Enables polymorphic serialization/deserialization in JSON for subclasses of Vehicle.
+// 'type' property in JSON will indicate the subclass name (e.g., "Car", "TwoWheeler", "UtilityVehicle").
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Car.class, name = "Car"),
@@ -11,16 +13,19 @@ import jakarta.persistence.*;
         @JsonSubTypes.Type(value = UtilityVehicle.class, name = "UtilityVehicle"),
 })
 
-@Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@Entity // Indicates that this class is a JPA entity, mapping it to a database table.
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE) // Configures all subclasses to be stored in a single table.
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING)
-@Table(name = "vehicles")
+// Specifies the column ('type') that will store the subclass type to differentiate among subclasses in a single table.
+@Table(name = "vehicles") // Maps the entity to the 'vehicles' table in the database.
 public abstract class Vehicle{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_vehicle", unique = true, nullable = false)  // Ensure this is unique in the hierarchy
+    @Id // Marks 'idVehicle' as the primary key for this entity.
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Configures 'idVehicle' to auto-increment as new records are created.
+    @Column(name = "id_vehicle", unique = true, nullable = false)  // Specifies the column's properties, ensuring it is unique and cannot be null.
     private int idVehicle;
+
+    // Declares other basic properties of the vehicle, which are common to all subclasses.
     private String plateNumber;
     private String brand;
     private String model;
@@ -28,15 +33,19 @@ public abstract class Vehicle{
     private int bookingPriceInCents;
     private int pricePerKilometerInCents;
     private int taxHorses;
-    @Column(name = "type", insertable = false, updatable = false) // Maps the discriminator column to the `type` field
+
+    // Maps the 'type' field to the discriminator column for read-only purposes.
+    // 'insertable = false, updatable = false' prevents conflicts since Hibernate controls this column.
+    @Column(name = "type", insertable = false, updatable = false)
     private String type;
 
-
+    // Default constructor, needed by JPA.
     public Vehicle() {
     }
 
-
-    public Vehicle (int idVehicle, String plateNumber, String brand, String model, String color, int bookingPriceInCents, int pricePerKilometerInCents, int taxHorses) {
+    // Constructor to initialize all properties when creating a new Vehicle instance.
+    public Vehicle(int idVehicle, String plateNumber, String brand, String model, String color,
+                   int bookingPriceInCents, int pricePerKilometerInCents, int taxHorses) {
         this.idVehicle = idVehicle;
         this.plateNumber = plateNumber;
         this.brand = brand;
@@ -47,6 +56,8 @@ public abstract class Vehicle{
         this.taxHorses = taxHorses;
     }
 
+    // Getter and setter methods for each field.
+    // These allow controlled access and modification of the fields by other classes.
 
     public int getIdVehicle() {
         return idVehicle;
