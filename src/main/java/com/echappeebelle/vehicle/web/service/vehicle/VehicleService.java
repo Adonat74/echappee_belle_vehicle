@@ -1,7 +1,7 @@
-package com.echappeebelle.vehicle.web.service;
+package com.echappeebelle.vehicle.web.service.vehicle;
 
 
-import com.echappeebelle.vehicle.web.model.Vehicle;
+import com.echappeebelle.vehicle.web.model.vehicle.Vehicle;
 
 import java.util.List;
 import java.util.Optional;

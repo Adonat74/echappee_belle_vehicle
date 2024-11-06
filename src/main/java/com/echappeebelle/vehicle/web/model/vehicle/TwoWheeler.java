@@ -1,4 +1,4 @@
-package com.echappeebelle.vehicle.web.model;
+package com.echappeebelle.vehicle.web.model.vehicle;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;

@@ -1,4 +1,4 @@
-package com.echappeebelle.vehicle.web.model;
+package com.echappeebelle.vehicle.web.model.vehicle;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;

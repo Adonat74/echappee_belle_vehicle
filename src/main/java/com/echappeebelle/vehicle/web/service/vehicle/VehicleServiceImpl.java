@@ -1,6 +1,6 @@
-package com.echappeebelle.vehicle.web.service;
+package com.echappeebelle.vehicle.web.service.vehicle;
 
-import com.echappeebelle.vehicle.web.model.Vehicle;
+import com.echappeebelle.vehicle.web.model.vehicle.Vehicle;
 import com.echappeebelle.vehicle.web.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

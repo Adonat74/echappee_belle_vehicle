@@ -1,7 +1,7 @@
 package com.echappeebelle.vehicle.web.controller;
 
-import com.echappeebelle.vehicle.web.model.Vehicle;
-import com.echappeebelle.vehicle.web.service.VehicleService;
+import com.echappeebelle.vehicle.web.model.vehicle.Vehicle;
+import com.echappeebelle.vehicle.web.service.vehicle.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +33,8 @@ public class VehicleController {
     public Vehicle addVehicle(@RequestBody Vehicle vehicle) {
         return vehicleService.save(vehicle);
     }
+
+
 
     @PutMapping(value = "/vehicles/{id}")
     public Vehicle updateVehicle(@PathVariable int id, @RequestBody Vehicle vehicle) {
