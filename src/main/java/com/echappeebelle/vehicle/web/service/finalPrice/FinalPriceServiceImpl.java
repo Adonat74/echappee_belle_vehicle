@@ -4,9 +4,7 @@ import com.echappeebelle.vehicle.web.model.finalPrice.FinalPrice;
 import com.echappeebelle.vehicle.web.model.vehicle.TwoWheeler;
 import com.echappeebelle.vehicle.web.model.vehicle.UtilityVehicle;
 import com.echappeebelle.vehicle.web.model.vehicle.Vehicle;
-import com.netflix.appinfo.InstanceInfo;
-import com.netflix.discovery.EurekaClient;
-import com.netflix.discovery.shared.Application;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -14,20 +12,18 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class FinalPriceServiceImpl implements FinalPriceService {
 
+    @Value("${server.port}")
+    private int port;
+
     public int calculateFinalPrice(FinalPrice finalPrice) {
         Vehicle vehicle = null;
 
         try {
-            EurekaClient eurekaClient = null;
             RestTemplate restTemplate = new RestTemplate();
 
-            Application application = eurekaClient.getApplication("ECHAPPEEBELLEVEHICLE");
-            InstanceInfo instanceInfo = application.getInstances().get(0);
-            String baseUrl = instanceInfo.getHomePageUrl();
 
-            System.out.println(baseUrl);
-
-            ResponseEntity<Vehicle> vehicleResponse = restTemplate.getForEntity(baseUrl + "vehicles/" + finalPrice.getVehicleId(), Vehicle.class);
+//            ResponseEntity<Vehicle> vehicleResponse = restTemplate.getForEntity("http://localhost:8080/vehicles/" + finalPrice.getVehicleId(), Vehicle.class);
+            ResponseEntity<Vehicle> vehicleResponse = restTemplate.getForEntity("http://localhost:" + port + "/vehicles/" + finalPrice.getVehicleId(), Vehicle.class);
             vehicle = vehicleResponse.getBody();
             if (vehicle == null) {
                 throw new Exception("Le véhicule n'éxiste pas");
