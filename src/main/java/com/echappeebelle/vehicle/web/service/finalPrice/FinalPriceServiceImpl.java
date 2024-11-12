@@ -12,6 +12,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class FinalPriceServiceImpl implements FinalPriceService {
 
+    // sert à récup les valeurs dans l'application.properties
     @Value("${server.port}")
     private int port;
 
@@ -21,16 +22,11 @@ public class FinalPriceServiceImpl implements FinalPriceService {
         try {
             RestTemplate restTemplate = new RestTemplate();
 
-
-//            ResponseEntity<Vehicle> vehicleResponse = restTemplate.getForEntity("http://localhost:8080/vehicles/" + finalPrice.getVehicleId(), Vehicle.class);
             ResponseEntity<Vehicle> vehicleResponse = restTemplate.getForEntity("http://localhost:" + port + "/vehicles/" + finalPrice.getVehicleId(), Vehicle.class);
             vehicle = vehicleResponse.getBody();
             if (vehicle == null) {
                 throw new Exception("Le véhicule n'éxiste pas");
             }
-
-
-
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -39,7 +35,6 @@ public class FinalPriceServiceImpl implements FinalPriceService {
         int nbKM = finalPrice.getNbKilometers();
         int basePriceInCents = vehicle.getBookingPriceInCents();
         int pricePerKilometersInCents = vehicle.getPricePerKilometerInCents();
-
 
         if (vehicle.getType().equals("Car")) {
             return basePriceInCents + (pricePerKilometersInCents * nbKM);

@@ -16,8 +16,9 @@ public class FinalPriceController {
         this.finalPriceService = finalPriceService;
     }
 
+    // route permettant de calculer le prix estimé de la location d'une voiture en fonction des kilomètres.
     @PostMapping("/final-price-in-cents-calculation")
-    public int calculateFinalPrice(@RequestBody FinalPrice finalPrice) {
+    public int calculateFinalPrice(@RequestBody FinalPrice finalPrice) {// body contenant l'estimation des kilomètres et l'id véhicule
         return finalPriceService.calculateFinalPrice(finalPrice);
     }
 
