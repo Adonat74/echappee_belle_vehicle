@@ -1,13 +1,17 @@
 package com.echappeebelle.vehicle.web.controller;
 
+import com.echappeebelle.vehicle.web.dto.VehicleDto;
+import com.echappeebelle.vehicle.web.mapper.VehicleMapper;
 import com.echappeebelle.vehicle.web.model.vehicle.Vehicle;
 import com.echappeebelle.vehicle.web.service.vehicle.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 public class VehicleController {
 
@@ -19,10 +23,19 @@ public class VehicleController {
     }
 
 
+
     @GetMapping("/vehicles")
-    public List<Vehicle> listVehicles() {
-        return vehicleService.findAll();
+    public ResponseEntity<List<VehicleDto>> listVehicles(@RequestParam(required = false) String type,
+                                                         @RequestParam(required = false) String brand,
+                                                         @RequestParam(required = false) String model) {
+        List<Vehicle> vehicles = vehicleService.findAll(type, brand, model);
+        List<VehicleDto> vehicleDtos = vehicles.stream()
+                .map(VehicleMapper::toDto)
+                .toList();
+        return ResponseEntity.ok(vehicleDtos);
     }
+
+
 
     @GetMapping(value = "/vehicles/{id}")
     public Optional<Vehicle> displayOneVehicle(@PathVariable int id) {

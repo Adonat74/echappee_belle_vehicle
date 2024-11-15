@@ -1,5 +1,6 @@
 package com.echappeebelle.vehicle.web.service.vehicle;
 
+import com.echappeebelle.vehicle.web.controller.spec.VehicleSpecification;
 import com.echappeebelle.vehicle.web.model.vehicle.Vehicle;
 import com.echappeebelle.vehicle.web.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,8 @@ public class VehicleServiceImpl implements VehicleService {
         this.vehicleRepository = vehicleRepository;
     }
 
-    public List<Vehicle> findAll() {
-        return vehicleRepository.findAll();
+    public List<Vehicle> findAll(String type, String brand, String model) {
+        return vehicleRepository.findAll(VehicleSpecification.getVehiclesByCriteria(type, brand, model));
     }
 
     public Optional<Vehicle> findById(int id) {
