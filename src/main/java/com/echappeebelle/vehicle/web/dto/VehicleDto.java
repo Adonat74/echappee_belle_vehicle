@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+// A DTO (Data Transfer Object) is a simple object used to transfer data between layers, typically without any business logic.
 @NoArgsConstructor
 @Setter
 @Getter

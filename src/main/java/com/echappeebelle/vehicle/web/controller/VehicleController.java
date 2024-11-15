@@ -24,14 +24,22 @@ public class VehicleController {
 
 
 
+    // The @GetMapping annotation maps HTTP GET requests to the method below
     @GetMapping("/vehicles")
-    public ResponseEntity<List<VehicleDto>> listVehicles(@RequestParam(required = false) String type,
-                                                         @RequestParam(required = false) String brand,
-                                                         @RequestParam(required = false) String model) {
+    public ResponseEntity<List<VehicleDto>> listVehicles(
+            @RequestParam(required = false) String type,    // Request parameter 'type' is optional (e.g., Car, TwoWheeler)
+            @RequestParam(required = false) String brand,   // Request parameter 'brand' is optional (e.g., Toyota, Honda)
+            @RequestParam(required = false) String model    // Request parameter 'model' is optional (e.g., Corolla, Civic)
+    ) {
+        // Call to the service layer to find vehicles based on the provided filters (type, brand, model)
         List<Vehicle> vehicles = vehicleService.findAll(type, brand, model);
+
+        // Convert the list of Vehicle entities into a list of VehicleDto using the VehicleMapper class
         List<VehicleDto> vehicleDtos = vehicles.stream()
-                .map(VehicleMapper::toDto)
-                .toList();
+                .map(VehicleMapper::toDto) // Maps each Vehicle to a VehicleDto using the toDto method
+                .toList(); // Collects all mapped VehicleDto objects into a list
+
+        // Return the list of VehicleDto wrapped in a ResponseEntity with an HTTP 200 OK status
         return ResponseEntity.ok(vehicleDtos);
     }
 

@@ -21,6 +21,7 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     public List<Vehicle> findAll(String type, String brand, String model) {
+        // Uses the VehicleRepository to find all vehicles that match the given criteria
         return vehicleRepository.findAll(VehicleSpecification.getVehiclesByCriteria(type, brand, model));
     }
 
